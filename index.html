@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>,,,</title>
+    <style>
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', sans-serif;
+        }
+        
+        html, body {
+            scroll-behavior: smooth;
+            height: 100%;
+        }
+        
+        /* 导航样式 */
+        nav {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            padding: 10px 25px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        nav ul {
+            display: flex;
+            gap: 25px;
+            list-style: none;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: #f8f9fa;
+            font-weight: 500;
+            padding: 8px 15px;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            background: rgba(16, 13, 93, 0.4);
+        }
+        
+        nav a:hover {
+            background: rgba(132, 163, 247, 0.8);
+            transform: translateY(-2px);
+        }
+        
+        /* 页面容器 */
+        .page {
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* 首页样式 */
+        #home {
+            background-color: #5E7EA7;
+            color: white;
+            text-align: center;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #home::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 1000%;
+            height: 800%;
+            background: inherit;
+            filter: blur(10px);
+            z-index: -1;
+        }
+        
+        .home-content {
+            max-width: 800px;
+            z-index: 2;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
+        }
+        
+        .home-content h1 {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            -webkit-background-clip: text;
+            background-color: #002663;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 8s infinite alternate;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+        
+        .home-content p {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+        
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(40px);
+            opacity: 0.6;
+        }
+        
+        
+        
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(40px, -30px); }
+            50% { transform: translate(-20px, 40px); }
+            75% { transform: translate(30px, 20px); }
+        }
+
+        
+
+        /* 角色 */
+        #character {
+            align-items: flex-start;
+            justify-content: flex-start;
+            background: linear-gradient(to bottom, #f5f7fa 0%, #e4efe9 100%);
+            color: #333;
+            padding: 80px 20px;
+        }
+
+        .character-container {
+            display: flex;
+            flex-direction: row; 
+            align-items: stretch; 
+            max-width: 1200px;
+            width: 100%;
+            gap: 30px;
+            background: white;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            margin: 0;
+        }
+
+/* 图片*/
+        .character-image {
+            flex: 0 0 40%; 
+            min-height: 500px; 
+            background-color: white;
+            display: flex;
+            justify-content: center; 
+            align-items: center; 
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+        }
+
+/* 图片占位符 */
+        .character-image .placeholder {
+            width: 90%; 
+            height: 90%; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+
+        .character-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; 
+            border-radius: 12px; 
+        }
+
+        /* 文字 */
+        .character-details {
+            flex: 1; 
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .character-details h2 {
+            font-size: 2.8rem;
+            margin-bottom: 30px;
+            color: #002663;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .character-details h2::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 180px;
+            height: 4px;
+            background-color: #3d557b;
+            border-radius: 2px;
+        }
+        
+        .character-info {
+            margin-bottom: 30px;
+        }
+        
+        .character-info p {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+        
+       
+        .stat {
+            background: #f8f7ff;
+            padding: 15px;
+            border-radius: 12px;
+            border-left: 4px solid #6bc3e8;
+        }
+        
+        .stat h4 {
+            color: #002663;
+            margin-bottom: 5px;
+        }
+
+        .text{
+            width: 330px;
+            height: 110px;
+            background-color: #a8a7aa;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .img .text {
+            width: 110px;
+            height: inherit;
+            background-color: #AA9CB6;
+            border-radius: 5px;
+        }
+
+        .text .text1 {
+            width: 200px;
+            height: inherit;
+            background-color: #AA9BB8;
+            margin-bottom: 30px;
+        }
+        
+        /* 世界观页面样式 */
+        #worldview {
+            background-size: cover;
+            position: relative;
+            color: white;
+        }
+        
+        #worldview::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #6F5F7A;
+            z-index: 1;
+        }
+        
+        .worldview-content {
+            max-width: 900px;
+            text-align: center;
+            padding: 50px;
+            z-index: 2;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+        }
+        
+        .worldview-content h2 {
+            font-size: 3.5rem;
+            margin-bottom: 30px;
+            color: #FFE8C6;
+        }
+        
+        .worldview-content p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            text-align: left;
+        }
+        
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .timeline-item {
+            text-align: left;
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 10px;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: #FFE8C6;
+        }
+worldview-content p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            text-align: left;
+        }
+        
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .timeline-item {
+            text-align: left;
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 10px;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: #FFE8C6;
+        }
+        
+        .timeline-item::after {
+            content: "";
+            position: absolute;
+            left: 7px;
+            top: 25px;
+            width: 2px;
+            height: calc(100% + 15px);
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .timeline-item:last-child::after {
+            display: none;
+        }
+        
+        .timeline-item h3 {
+            color: #FFE8C6;
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+        
+        /* 响应 式*/
+        @media (max-width: 900px) {
+            .character-container {
+                flex-direction: column;
+            }
+            
+            .character-image {
+                min-height: 350px;
+            }
+            
+            nav ul {
+                gap: 10px;
+            }
+            
+            nav a {
+                padding: 6px 12px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .home-content h1 {
+                font-size: 3.5rem;
+            }
+            
+            .worldview-content h2 {
+                font-size: 2.5rem;
+            }
+            
+            
+             nav {
+                padding: 8px 15px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航 -->
+    <nav>
+        <ul>
+            <li><a href="#home">首页</a></li>
+            <li><a href="#character">角色设定</a></li>
+            <li><a href="#worldview">世界观</a></li>
+        </ul>
+    </nav>
+
+    <!-- 首页 -->
+    <section id="home" class="page">
+        <div class="home-content">
+            <h1>朕是皇帝</h1>
+            <p>狗奴才，还不上贡几张龙图来？！</p>
+        </div>
+    </section>
+
+    <!-- 角色设定页 -->
+    <section id="character" class="page">
+        <div class="character-container">
+           <div class="character-image">
+                <div class="placeholder">
+                    <img src="https://img12.360buyimg.com/ddimg/jfs/t1/310005/21/14570/37559/6868ea10Fc4017b06/a169414aaf733350.jpg" 
+                    alt="oc图片">
+                </div>
+            </div>
+        
+            <div class="character-details">
+                <h2>oc设定</h2>
+                <div class="character-info">
+                    <p><strong>姓名：</strong>嫦月芒</p>
+                    <p><strong>年龄：</strong>15岁</p>
+                    <p><strong>职业：</strong>学生</p>
+                    <p><strong>性格：</strong>抽象，可爱</p>
+                    <p><strong>人设：</strong>是个人</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 世界观页 -->
+    <section id="worldview" class="page">
+        <div class="worldview-content">
+            <h2>OC世界观</h2>
+            <p>…………………………………………………………………………………………………………</p>
+            <p>…………………………………………………………………………………………………………</p><div class="timeline">
+                <div class="timeline-item">
+                    <h3>世界观1</h3>
+                    <p>……………………………………………………………………………………</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>世界观2</h3>
+                    <p>……………………………………………………………………………………</p>
+                </div>
+        </div>
+    </section>
+</body>
+</html>
